@@ -1,0 +1,31 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mydeployment
+spec:
+  replicas: 1
+  selector:      
+    matchLabels:
+     env: CICD
+  template:
+    metadata:
+      name: testpod8
+      labels:
+        env: CICD
+    spec:
+     containers:
+       - name: c00
+         image: adamtravis/wezvacicd:latest
+         ports:
+          - containerPort: 8080
+---
+kind: Service                             
+apiVersion: v1
+metadata:
+  name: demoservice
+spec:
+  ports:
+    - port: 8080                              
+      targetPort: 8080                     
+  selector:
+    env: CICD

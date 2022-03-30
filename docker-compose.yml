@@ -1,0 +1,18 @@
+version: '3'
+services:
+ web:
+  container_name: wezvadev
+  image: "adamtravis/wildfly"
+  ports:
+  - "8080:8080"
+  volumes:
+  - ./sanity:/var/log/wezva
+  restart: always
+  command: -Djboss.server.log.dir=/var/log/wezva
+  depends_on:
+    - redis
+ redis:
+  container_name: wezvadevdb
+  image: "redis:alpine"
+  ports:
+  - "6379:6379"
